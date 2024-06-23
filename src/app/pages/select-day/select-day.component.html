@@ -20,7 +20,7 @@
     (ngModelChange)="changesMonitor($event)"
     presentation="date">
     @if (isRange) {
-      <span slot="title">{{date?.length! === 2 ? date?.[0] : 'From'}} - {{date?.length === 2 ? date?.[1] : 'To'}}</span>
+      <ion-text slot="title">{{date?.length! === 2 ? date?.[0] : 'From'}} - {{date?.length === 2 ? date?.[1] : 'To'}}</ion-text>
     }
   </ion-datetime>
 
