@@ -77,7 +77,6 @@ export class DataStorageService {
         }
       )),
       switchMap(({categories, expenses, config, accounts}: InitRequest) => {
-        console.log(this.database.driver);
         this._expenses = expenses || [];
         let catBackup: Observable<Category[] | null> = this.http.get<Category[]>('assets/data/categories.json');
         let accBackup: Observable<Account[] | null> = this.http.get<Account[]>('assets/data/accounts.json');

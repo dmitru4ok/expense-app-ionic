@@ -46,8 +46,6 @@ export class DonutChartComponent implements OnDestroy {
     if (newData) {
       this.sum = this.currency.transform(newData.reduce((s, el) => s + el.totalSum, 0), this.dataService.currency)!;
       fills = newData.map(el => el.colorActive);
-    } else {
-      
     }
    return this.chartOptions = {
       data: newData,
