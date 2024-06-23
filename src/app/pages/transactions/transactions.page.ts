@@ -1,7 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActionSheetController, IonItemSliding } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DataStorageService } from 'src/app/service/data-storage.service';
 import { TransactionsFilterPipe } from 'src/app/service/transactions-filter.pipe';
 import { TransactionsEntry } from 'src/app/shared/interfaces.data';
@@ -12,9 +12,8 @@ import { TransactionsEntry } from 'src/app/shared/interfaces.data';
   styleUrls: ['./transactions.page.scss'],
   providers: [TransactionsFilterPipe]
 })
-export class TransactionsPage implements OnDestroy {
+export class TransactionsPage {
   form: FormGroup;
-  subscriptions: Subscription[] = [];
   expenseToedit: {
     id: number, cat_id: number, amount: number, name: string,
     color: string, icon: string, note?: string
@@ -40,8 +39,9 @@ export class TransactionsPage implements OnDestroy {
       date: new FormControl(null, Validators.required),
       category: new FormControl(null, Validators.required)
     });
-    const modalAppearanceSub = this.form.get('category')!.valueChanges
-      .subscribe(value => {
+    this.form.get('category')!.valueChanges
+    .pipe(takeUntilDestroyed())
+    .subscribe(value => {
         const category = this.dataService.getCategoryInfo(value)!;
         this.expenseToedit = {
           ...this.expenseToedit!,
@@ -50,10 +50,11 @@ export class TransactionsPage implements OnDestroy {
           color: category.color_active,
           icon: category.f_ion_icon
         };
-      });
-    const filteringSub = this.dataService.dataChanged$.subscribe(() => this.updateTransactions());
-    this.subscriptions.push(filteringSub);
-    this.subscriptions.push(modalAppearanceSub);
+    });
+
+    this.dataService.dataChanged$
+    .pipe(takeUntilDestroyed())
+    .subscribe(() => this.updateTransactions());
   }
 
   openFilteringModal() {
@@ -71,10 +72,7 @@ export class TransactionsPage implements OnDestroy {
       this.noteFilter, 
       this.categorySelectedArray, this.accountSelectedArray);
   }
-  
-  ngOnDestroy() {
-    this.subscriptions.forEach(subs => subs.unsubscribe());
-  }
+
 
   watchNoteChanges(eventData: string) {
     if (eventData) this.noteExists = true;
