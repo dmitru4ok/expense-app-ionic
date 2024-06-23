@@ -1,0 +1,67 @@
+ion-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    text-align: center;
+}
+
+ion-content {
+    display: flex;
+}
+
+donut-chart {
+    display: block;
+    margin: 0 auto;
+}
+
+.wrap-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+ion-list {
+    padding: 0;
+}
+
+ion-datetime {
+    margin: 1rem auto;
+}
+
+@media screen and (min-height: 600px) {
+    .first-icon-row, 
+    .second-icon-row {
+        height: 19%;
+        padding: 0;
+    }
+
+    .first-icon-row {
+        margin-bottom: 1rem;
+    }
+}
+@media screen and (min-height: 700px) {
+    .first-icon-row, 
+    .second-icon-row {
+        margin: 0;
+    }
+}
+
+@media screen and (min-height: 800px) {
+    .first-icon-row, 
+    .second-icon-row {
+    margin-top: 1rem;
+    margin: 0;
+    height: 15%;
+    }
+}
+
+@media screen and (min-height: 900px) {
+    .first-icon-row, 
+    .second-icon-row {
+    padding: 0;
+   
+    }
+}
+
+

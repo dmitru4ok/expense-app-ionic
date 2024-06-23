@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+    Set Currency
+  </ion-title>
+  <ion-buttons slot="primary">
+    <ion-button fill="clear" (click)="setCurrency()">Confirm</ion-button>
+  </ion-buttons> 
+</ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-radio-group [(ngModel)]="selectedCurrency">
+      @for (item of locations; track $index) {
+        <ion-item>
+          <ion-radio justify="start" labelPlacement="end" [value]="item">{{item}}</ion-radio>
+        </ion-item>
+      }
+    </ion-radio-group>
+  </ion-list>
+  
+</ion-content>

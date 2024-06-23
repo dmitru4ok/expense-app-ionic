@@ -1,0 +1,4 @@
+[
+    {"id": 1, "name": "Card", "balance": 0, "icon": "card-outline"},
+    {"id": 2, "name": "Cash", "balance": 0,  "icon": "cash-outline"}
+]

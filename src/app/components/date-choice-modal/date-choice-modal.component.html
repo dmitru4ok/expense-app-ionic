@@ -1,0 +1,59 @@
+<ion-modal [trigger]="trigger_id" initialBreakpoint="0.5" [breakpoints]="[0, 0.3, 0.5, 0.7, 0.8, 1]">
+  <ng-template>
+    <ion-content>
+      <ion-text class="ion-text-center ion-margin-top"><h3>Period</h3></ion-text>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" class="big" (click)="selectRange()">
+              <mat-icon [ngStyle]="{'margin-right': '5px'}" fontIcon="date_range"></mat-icon>
+              <ion-text>Select range</ion-text>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" (click)="selectAllTime()">
+              <ion-icon slot="start" name="infinite"></ion-icon>
+              <ion-text>All time</ion-text>
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" (click)="selectDay()">
+              <ion-icon slot="start" name="apps"></ion-icon>
+              <ion-text>Select day</ion-text>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" (click)="selectWeek()">
+              <mat-icon [ngStyle]="{'margin-right': '5px'}" fontIcon="filter_7"></mat-icon>
+              <ion-text>Week</ion-text>
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" (click)="selectToday()">
+              <ion-icon slot="start" name="today"></ion-icon>
+              <ion-text>Today</ion-text>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" (click)="selectYear()">
+              <ion-icon slot="start" name="planet"></ion-icon>
+              <ion-text>Year</ion-text>
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" (click)="selectMonth()">
+              <ion-icon slot="start" name="calendar"></ion-icon>
+              <ion-text>Month</ion-text>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-content>
+  </ng-template>
+</ion-modal>

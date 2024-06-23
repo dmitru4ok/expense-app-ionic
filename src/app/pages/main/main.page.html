@@ -1,0 +1,110 @@
+
+<top-toolbar></top-toolbar>
+<ion-content>
+  <ion-grid class="first-icon-row">
+    <ion-row>
+      @for (item of dataService.mainPageCategories.slice(0, 4); track $index) {
+        <ion-col>
+          <ion-text class="wrap-text">{{item.categoryName}}</ion-text>
+          <ion-button 
+            (click)="addExpenseOpenModal(item.catId)" shape="round" fill="solid" 
+            [ngStyle]="{
+              '--background': item.totalSum > 0 ? item.colorActive : item.color, 
+              '--background-hover': item.color,   
+              '--background-activated': item.color
+              }" 
+            size="large">
+            <ion-icon slot="icon-only" [name]="item.iconName" size="large"></ion-icon>
+          </ion-button>
+          <ion-text  class="wrap-text">{{item.totalSum | currency:dataService.currency}}</ion-text>
+        </ion-col>
+      }
+    </ion-row>
+  </ion-grid>
+  <div class="donut-container">
+    <donut-chart></donut-chart>
+  </div>
+ 
+  <ion-grid class="second-icon-row"> 
+    <ion-row>
+      @for (item of dataService.mainPageCategories.slice(4, 9); track $index) {
+        <ion-col>
+          <ion-text  class="wrap-text">{{item.categoryName}}</ion-text>
+          <ion-button 
+            (click)="addExpenseOpenModal(item.catId)" shape="round" fill="solid" 
+            [ngStyle]="{'--background': item.totalSum > 0 ? item.colorActive : item.color, '--background-hover': item.color, '--background-activated': item.color}" size="large">
+            <ion-icon slot="icon-only" [name]="item.iconName" size="large"></ion-icon>
+          </ion-button>
+          <ion-text  class="wrap-text">{{item.totalSum| currency:dataService.currency }}</ion-text>
+        </ion-col>
+      }
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-modal [isOpen]="modalIsOpen" (didDismiss)="cancelAdding()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar [ngStyle]="{'--background': modalConfig?.color}">
+        <ion-buttons slot="start">
+          <ion-button slot="start" (click)="cancelAdding()">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+          <ion-title >{{modalConfig?.name}}</ion-title>
+          <ion-icon size="large" slot="end" [name]="modalConfig?.icon"></ion-icon>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button (click)="appendExpense()" [disabled]="form.invalid">
+            <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-margin" [forceOverscroll]="false">
+      <ion-list lines="none">
+        <ion-item>
+          <ion-text class="padding-bottom">
+            <h4>Create expense</h4>
+          </ion-text>
+        </ion-item>
+        <form [formGroup]="form">
+          <div class="ion-margin">
+          <ion-input 
+          [clearInput]="true" 
+          fill="outline"
+          formControlName="amount"
+          labelPlacement="stacked"
+          type="number"
+          min="0" 
+          placeholder="0" 
+          required>
+          <div slot="label">Amount <ion-text color="danger">(Required)</ion-text></div>
+            <ion-icon slot="end" name="pricetag-outline" aria-hidden="true"></ion-icon>
+          </ion-input>
+        </div>
+        <div class="ion-margin">
+          <ion-select formControlName="acc_id"  fill="outline" interface="popover" label-placement="stacked"> 
+            <div slot="label">Account<ion-text color="danger">(Required)</ion-text></div>
+            @for (item of dataService.accounts; track $index) {
+              <ion-select-option [value]="item.id">{{item.name}} - <ion-text>{{item.balance | currency:dataService.currency}}</ion-text></ion-select-option>
+          }
+          </ion-select>
+        </div>
+        <div class="ion-margin">
+          <ion-input formControlName="note" fill="outline" labelPlacement="stacked" label="Note" [counter]="true" maxlength="60">
+            <ion-icon slot="end" name="document-text-outline" aria-hidden="true"></ion-icon>
+          </ion-input>
+        </div>
+        <ion-datetime 
+          class="ion-datetime-light ion-margin-bottom" 
+          presentation="date" 
+          formControlName="date">
+        </ion-datetime>
+      </form>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+
+

@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>{{isRange ? 'Select range' : 'Select day'}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="disableButton()" (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+  <ion-datetime
+    class="ion-datetime-light" 
+    [multiple]="isRange"
+   [preferWheel]="false"
+    [(ngModel)]="date"
+    [showDefaultTitle]="true"
+    (ngModelChange)="changesMonitor($event)"
+    presentation="date">
+    @if (isRange) {
+      <span slot="title">{{date?.length! === 2 ? date?.[0] : 'From'}} - {{date?.length === 2 ? date?.[1] : 'To'}}</span>
+    }
+  </ion-datetime>
+
+   </ion-list>
+</ion-content>
+

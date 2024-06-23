@@ -1,0 +1,25 @@
+ion-modal {
+    --height: 80%;
+}
+
+
+ion-row {
+    text-align: center;
+}
+
+ion-grid {
+    background-color: #444444;
+    margin: 0.3rem;
+    border-radius: 1rem;
+}
+
+ion-content {
+    --overflow: hidden; 
+}
+
+ion-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    --background: var(--ion-color-dark);
+}

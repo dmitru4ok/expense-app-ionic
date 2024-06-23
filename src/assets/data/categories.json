@@ -1,0 +1,10 @@
+[
+    {"id": 1, "name": "Groceries",      "color_active": "rgba(16, 97, 227, 1)", "color": "rgba(16, 97, 227, 0.5)", "f_ion_icon": "pizza"},
+    {"id": 2, "name": "Cafés",          "color_active": "rgba(58, 42, 201, 1)", "color": "rgba(58, 42, 201, 0.5)", "f_ion_icon": "cafe"},
+    {"id": 3, "name": "Travel",         "color_active": "rgba(250, 40, 113, 1)", "color": "rgba(250, 40, 113, 0.5)", "f_ion_icon": "airplane"},
+    {"id": 4, "name": "Transport",      "color_active": "rgba(252, 140, 15, 1)", "color": "rgba(252, 140, 15, 0.5)", "f_ion_icon": "bus"},
+    {"id": 5, "name": "Put aside",      "color_active": "rgba(250, 214, 10, 1)", "color": "rgba(250, 214, 10, 0.5)", "f_ion_icon": "wallet"},
+    {"id": 6, "name": "Home & Study",   "color_active": "rgba(115, 2, 227, 1)", "color": "rgba(115, 2, 227, 0.5)", "f_ion_icon": "book"},
+    {"id": 7, "name": "Presents",       "color_active": "rgba(52, 163, 58, 1)", "color": "rgba(52, 163, 58, 0.5)", "f_ion_icon": "gift"},
+    {"id": 8, "name": "Housing",        "color_active": "rgba(224, 40, 27, 1)", "color": "rgba(224, 40, 27, 0.5)", "f_ion_icon": "home"}
+]

@@ -1,0 +1,35 @@
+.no-data {
+    display: flex;
+    height: 100%;
+    align-items: center;
+
+    ion-text {
+        text-align: center;
+        margin: 0 auto;
+    }
+}
+
+.card-list {
+    padding-bottom: 0;
+}
+
+ion-fab-button {
+    --border-radius: 1rem;
+}
+
+.filtering-modal {
+    --height: 80%;
+}
+
+ion-chip {
+    display: flex;
+}
+
+ion-chip.ion-text-nowrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    justify-content: center;
+}
+

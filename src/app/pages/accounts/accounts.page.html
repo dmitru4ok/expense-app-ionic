@@ -1,0 +1,156 @@
+<top-toolbar></top-toolbar>
+
+<ion-content [forceOverscroll]="false">
+  <ion-grid>
+    <ion-row class="ion-justify-content-between ion-padding-start ion-padding-end ion-align-items-center">
+      <ion-col>Accounts</ion-col>
+      <ion-col>
+        <ion-text class="status-row" [color]="dataService.accountsTotal > 0 ? 'success' : 'danger'">
+          <p>{{dataService.accountsTotal | currency:dataService.currency}}</p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list [lines]="dataService.isLightMode ? 'full' : 'inset'" [ngClass]="{'ion-margin': !dataService.isLightMode}"
+    [inset]="true">
+    @for (account of dataService.accounts; track $index) {
+    <ion-item [button]="true" detail="1" slot="header"
+      [ngClass]="{'detail-icon-colored': dataService.primaryAccount === account.id}"
+      [detailIcon]="dataService.primaryAccount === account.id ? 'star' : 'chevron-forward-outline'"
+      (click)="openAccountActionsModal(account)">
+      <ion-icon [name]="account.icon" size="large" slot="start"></ion-icon>
+      <ion-label>{{account.name}}</ion-label>
+      <ion-text slot="end" [color]="account.balance > 0 ? 'success' : 'danger'">{{account.balance |
+        currency:dataService.currency}}</ion-text>
+    </ion-item>
+    }
+  </ion-list>
+  <!-- <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="creationModalIsOpen = true;">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+</ion-content>
+
+
+
+<ion-modal [isOpen]="creationModalIsOpen" [canDismiss]="canDismissEditForm" [handle]="false" [initialBreakpoint]="1"
+  [breakpoints]="[0, 1]" (didDismiss)="cancelCreation()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="cash-toolbar">
+        <ion-buttons slot="start">
+          <ion-title>Create account</ion-title>
+          <ion-icon size="large" slot="end" name="logo-usd"></ion-icon>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button (click)="saveChanges()" [disabled]="creationForm.invalid">
+            <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <form [formGroup]="creationForm">
+          <div class="ion-margin">
+            <ion-input fill="outline" labelPlacement="stacked" formControlName="name">
+              <div slot="label">Name <ion-text color="danger">(Required)</ion-text></div>
+            </ion-input>
+          </div>
+          <div class="ion-margin">
+            <ion-input fill="outline" labelPlacement="stacked" type="number" [min]="0" formControlName="balance">
+              <div slot="label">Balance <ion-text color="danger">(Required)</ion-text></div>
+            </ion-input>
+          </div>
+
+          <div class="ion-margin">
+            <ion-input fill="outline" labelPlacement="stacked" label="Description" formControlName="description"
+              [counter]="true" maxlength="60">
+            </ion-input>
+          </div>
+          <div class="ion-margin">
+            <ion-toggle formControlName="makePrimary" justify="space-between">Set as primary</ion-toggle>
+          </div>
+        </form>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+
+<ion-modal #modalRef [isOpen]="accountModalIsOpen" [canDismiss]="canDismiss" (didDismiss)="closeAccountActions()"
+  [breakpoints]="[0, 0.6, 1]" [initialBreakpoint]="0.6">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="cash-toolbar">
+        <ion-buttons slot="start">
+          <ion-title>{{accountToEdit?.name}}</ion-title>
+          <ion-icon size="large" slot="end" [name]="accountToEdit?.icon"></ion-icon>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding" [forceOverscroll]="false">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <ion-textarea [disabled]="true" value="{{accountToEdit?.description}}"></ion-textarea>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="buttons-col">
+            <ion-button shape="round" [disabled]="dataService.accounts.length === 1" size="large"
+              (click)="deleteAccount(modalRef)"
+              [ngStyle]="{'--background': 'rgba(197, 0, 15, 0.3)', '--background-activated': 'rgba(197, 0, 15, 0.7)'}">
+              <ion-icon name="trash" slot="icon-only" color="danger"></ion-icon>
+            </ion-button>
+            <ion-text>Delete</ion-text>
+          </ion-col>
+          <ion-col class="buttons-col">
+            <ion-button shape="round" fill="clear" size="large" (click)="addBalanceOpen(modalRef)"
+              [ngStyle]="{'--background': 'rgba(36, 181, 140, 0.3)', '--background-activated': 'rgba(36, 181, 140, 0.8)'}">
+              <ion-icon name="cash" slot="icon-only" style="color: rgb(36, 181, 140)"></ion-icon>
+            </ion-button>
+            <ion-text>Deposit</ion-text>
+          </ion-col>
+          <ion-col class="buttons-col" (click)="editAccountOpen(modalRef)">
+            <ion-button shape="round" fill="clear" size="large"
+              [ngStyle]="{'--background': 'rgba(255, 206, 49, 0.3)', '--background-activated': 'rgba(255, 206, 49, 0.8)'}">
+              <ion-icon name="pencil-outline" slot="icon-only" color="warning"></ion-icon>
+            </ion-button>
+            <ion-text>Edit</ion-text>
+          </ion-col>
+          <ion-col [ngStyle]="{'display': dataService.primaryAccount === accountToEdit?.id ? 'none' : 'block'}"
+            class="buttons-col">
+            <ion-button shape="round" size="large" (click)="dataService.setPrimaryAccount(accountToEdit?.id!)">
+              <ion-icon slot="icon-only" name="star"></ion-icon>
+            </ion-button>
+            <ion-text>Mark primary</ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      @if (mode === 'accountEdit') {
+      <form [formGroup]="editForm" (ngSubmit)="editAccount()">
+        <ion-item>
+          <ion-input formControlName="name" label="Name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input formControlName="description" label="Description"></ion-input>
+        </ion-item>
+        <ion-button [disabled]="editForm.invalid || editForm.pristine && editForm.untouched" type="submit"
+          expand="block">Save</ion-button>
+      </form>
+      }
+      @if (mode === 'balanceAdd') {
+      <form [formGroup]="balanceForm" (ngSubmit)="addBalance()">
+        <ion-item>
+          <ion-input formControlName="balanceAdded" label="Add to balance" required type="number" min="0"></ion-input>
+        </ion-item>
+        <ion-button [disabled]="balanceForm.invalid" type="submit" expand="block">Add {{balanceForm.value.balanceAdded |
+          currency:dataService.currency}}</ion-button>
+      </form>
+      }
+    </ion-content>
+  </ng-template>
+</ion-modal>

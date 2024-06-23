@@ -1,3 +1,32 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content">
+  <ion-menu contentId="main-content" >
+    <ion-header>
+      <ion-toolbar  color="tertiary"></ion-toolbar>
+      <ion-toolbar color="tertiary">
+        <ion-title>Expense tracker</ion-title>
+     </ion-toolbar>
+    </ion-header>
+    <ion-content color="light">
+      <ion-list lines="none">
+        <ion-menu-toggle [routerLink]="['/set-currency']" [autoHide]="false">
+          <ion-item [button]="true" detail="true" detail-icon="logo-usd">
+          <ion-label>Currency</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle [routerLink]="['/data-page']" [autoHide]="false" (click)="exportCSV()">
+          <ion-item [button]="true" detail="true" detail-icon="analytics-outline">
+            <ion-label>Export Data</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-item>
+          <ion-toggle justify="space-between" [checked]="!dataService.isLightMode" (ionChange)="toggleMode()">Dark Mode</ion-toggle>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>
+
+

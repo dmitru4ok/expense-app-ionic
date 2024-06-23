@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons class="ion-justify-content-between" slot="start">
+      <ion-button fill="clear" class="ion-no-margin" [disabled]="this.dataService.disableShiftButtons" (click)="this.dataService.shiftDatesLeft()">
+        <ion-icon slot="icon-only" name="chevron-back-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons class="ion-justify-content-center">
+      <ion-button shape="round" fill="solid" color="primary" size="small" [id]="trigger_name">
+        <ion-icon slot="start" name="calendar-number-outline"></ion-icon>
+        <ion-text [textContent]="dataService.stringFormattedDate"></ion-text>
+        <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons class="ion-justify-content-between" slot="end">
+      <ion-button fill="clear" class="ion-no-margin" [disabled]="this.dataService.disableShiftButtons" (click)="this.dataService.shiftDatesRight()">
+        <ion-icon slot="icon-only" name="chevron-forward-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<date-choice-modal [trigger_id]="trigger_name"></date-choice-modal>
