@@ -39,7 +39,7 @@
                 </ion-item-options>
             </ion-item-sliding>
             @if (transaction['note']) {
-            <ion-accordion-group [animated]="false">
+            <ion-accordion-group>
                 <ion-accordion>
                     <ion-item slot="header"></ion-item>
                     <div class="ion-padding" slot="content">{{transaction['note']}}</div>

@@ -115,7 +115,7 @@ export class DataStorageService {
       })).subscribe();
   }
 
-  async initStorage() {
+  private async initStorage() {
     this.database = await this.databaseManager.create();
   }
 
@@ -151,10 +151,6 @@ export class DataStorageService {
 
   get accountsTotal() {
     return this._accounts.reduce((s, el) => s + el.balance, 0);
-  }
-
-  private setDifference() {
-    this.difference = differenceInDays(this.endRangeDate, this.startRangeDate);
   }
 
   // EXPENSE MANIPULATION METHODS 
@@ -509,7 +505,7 @@ export class DataStorageService {
 
   // format string to display in top toolbar
   private formatDispalyingString() {
-    this.setDifference();
+    this.difference = differenceInDays(this.endRangeDate, this.startRangeDate);
     switch (this.rangeType) {
       case RangeType.RANGE: {
         this._stringFormattedDate = `${this.datePipe.transform(this.startRangeDate)} - ${this.datePipe.transform(subDays(this.endRangeDate, 1))}`;
@@ -529,8 +525,8 @@ export class DataStorageService {
       }
       case RangeType.WEEK: {
         if (
-          this.startRangeDate.getFullYear() < this.startRangeDate.getFullYear() ||
-          this.startRangeDate.getMonth() < this.endRangeDate.getMonth()) {
+          this.startRangeDate.getUTCFullYear() < this.startRangeDate.getUTCFullYear() ||
+          this.startRangeDate.getUTCMonth() < this.endRangeDate.getUTCMonth()) {
           this._stringFormattedDate = `${this.datePipe.transform(this.startRangeDate)} - ${this.datePipe.transform(subDays(this.endRangeDate, 1))}`;
           return;
         }

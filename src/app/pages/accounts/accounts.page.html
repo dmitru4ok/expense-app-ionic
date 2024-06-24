@@ -14,7 +14,7 @@
   <ion-list [lines]="dataService.isLightMode ? 'full' : 'inset'" [ngClass]="{'ion-margin': !dataService.isLightMode}"
     [inset]="true">
     @for (account of dataService.accounts; track $index) {
-    <ion-item [button]="true" detail="1" slot="header"
+    <ion-item [button]="true" detail="1"
       [ngClass]="{'detail-icon-colored': dataService.primaryAccount === account.id}"
       [detailIcon]="dataService.primaryAccount === account.id ? 'star' : 'chevron-forward-outline'"
       (click)="openAccountActionsModal(account)">
