@@ -232,7 +232,6 @@ export class DataStorageService {
     this.database.set('accounts', this._accounts).then(() => {
       if (setprimary) {
         this.setPrimaryAccount(this.config.lastAccountId);
-        console.log(this.accounts, this.config);
       } else {
         this.database.set('config', this.config);
       }
